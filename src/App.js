@@ -16,6 +16,7 @@ import axios from "axios";
 function App() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [allClues, setAllClues] = useState(true);
 
   useEffect(() => {
     axios
@@ -66,10 +67,20 @@ function App() {
 export default App;
 
 const getCluesForCategories = (ids) => {
+  const promises = [];
+
   for (let i = 0; i < ids.length; i++) {
-    axios
-      .get(`https://jservice.io/api/clues/?category=${ids[i]}`)
-      .then((response) => {
+    const promise = axios.get(
+      `https://jservice.io/api/clues/?category=${ids[i]}`
+    );
+    promises.push(promise);
+  }
+
+  Promise.all(promises)
+    .then((responses) => {
+      const allClues = [];
+
+      responses.forEach((response) => {
         // sort based on clue value
         let newArr = response.data.map((obj) => ({
           ...obj,
@@ -91,12 +102,12 @@ const getCluesForCategories = (ids) => {
 
         console.log("\n");
 
-        // add to allClues
-
-        // setAllClues([...allClues, newArr]);
-      })
-      .catch((error) => {
-        console.log(error.message);
+        allClues.push(newArr);
       });
-  }
+
+      console.log("allClues", allClues);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
