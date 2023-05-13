@@ -15,6 +15,8 @@ import axios from "axios";
 
 function App() {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [allClues, setAllClues] = useState(null);
 
   useEffect(() => {
     axios
@@ -37,13 +39,25 @@ function App() {
         uniqueIds = uniqueIds.slice(0, 6);
 
         setCategories(uniqueIds);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error.message);
+        setLoading(false);
       });
   }, []);
 
+  useEffect(() => {
+    if (!loading && categories.length === 6) {
+      getCluesForCategories(categories);
+    }
+  }, [loading]);
+
   console.log("categories", categories);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -53,3 +67,20 @@ function App() {
 }
 
 export default App;
+
+const getCluesForCategories = (ids) => {
+  // get clues from uniqueIds
+  // https://jservice.io/api/clues/?category=76
+  console.log("getCluesForCategories");
+
+  for (let i = 0; i < ids.length; i++) {
+    axios
+      .get(`https://jservice.io/api/clues/?category=${ids[i]}`)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }
+};
