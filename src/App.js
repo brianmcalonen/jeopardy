@@ -17,30 +17,30 @@ function App() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const ids = [];
-      while (ids.length < 6) {
-        const { data } = await axios.get("https://jservice.io/api/random");
-        const categoryId = data;
-        // const categoryId = data[0].category_id;
+    axios
+      .get("https://jservice.io/api/random/?count=10")
+      .then((response) => {
+        // handle successful response
+        console.log(response.data);
 
-        console.log("categoryId", categoryId);
-        if (!ids.includes(categoryId)) {
-          ids.push(categoryId);
+        while (categories.length < 6) {
+          response.data.forEach((clue) => {
+            if (!categories.includes(clue.categoryId)) {
+              setCategories(...categories, clue.categoryId);
+            }
+          });
         }
-      }
-      setCategories(ids);
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    console.log(categories);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error.message);
+      });
   }, [categories]);
 
   return (
-    // render your component here
-    <h1>hi</h1>
+    <div>
+      <h1>hi</h1>
+    </div>
   );
 }
 
