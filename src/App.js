@@ -16,7 +16,6 @@ import axios from "axios";
 function App() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [allClues, setAllClues] = useState(null);
 
   useEffect(() => {
     axios
@@ -53,15 +52,13 @@ function App() {
     }
   }, [loading]);
 
-  console.log("categories", categories);
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <h1>hi</h1>
+      <h1>Jeopardy Game</h1>
     </div>
   );
 }
@@ -69,15 +66,34 @@ function App() {
 export default App;
 
 const getCluesForCategories = (ids) => {
-  // get clues from uniqueIds
-  // https://jservice.io/api/clues/?category=76
-  console.log("getCluesForCategories");
-
   for (let i = 0; i < ids.length; i++) {
     axios
       .get(`https://jservice.io/api/clues/?category=${ids[i]}`)
       .then((response) => {
-        console.log(response.data);
+        // sort based on clue value
+        let newArr = response.data.map((obj) => ({
+          ...obj,
+          value: obj.value !== null ? obj.value : 1000,
+        }));
+
+        newArr.sort((a, b) => a.value - b.value);
+
+        newArr = newArr.slice(0, 5);
+
+        console.log("\n");
+        console.log(newArr[0].category.title);
+
+        newArr.forEach((clue) => {
+          console.log(`$${clue.value}`);
+          console.log("Question:", clue.question);
+          console.log("Answer: ", clue.answer);
+        });
+
+        console.log("\n");
+
+        // add to allClues
+
+        // setAllClues([...allClues, newArr]);
       })
       .catch((error) => {
         console.log(error.message);
