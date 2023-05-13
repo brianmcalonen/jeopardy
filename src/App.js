@@ -20,22 +20,30 @@ function App() {
     axios
       .get("https://jservice.io/api/random/?count=10")
       .then((response) => {
-        // handle successful response
-        console.log(response.data);
+        const idsArray = [];
+        let uniqueIds = [];
 
-        while (categories.length < 6) {
-          response.data.forEach((clue) => {
-            if (!categories.includes(clue.categoryId)) {
-              setCategories(...categories, clue.categoryId);
-            }
-          });
+        for (let i = 0; i < response.data.length; i++) {
+          const id = response.data[i].category_id;
+          idsArray.push(id);
         }
+
+        for (let i = 0; i < idsArray.length; i++) {
+          if (!uniqueIds.includes(idsArray[i])) {
+            uniqueIds.push(idsArray[i]);
+          }
+        }
+
+        uniqueIds = uniqueIds.slice(0, 6);
+
+        setCategories(uniqueIds);
       })
       .catch((error) => {
-        // handle error
         console.log(error.message);
       });
-  }, [categories]);
+  }, []);
+
+  console.log("categories", categories);
 
   return (
     <div>
