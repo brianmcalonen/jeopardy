@@ -1,7 +1,7 @@
 import axios from "axios";
-import { setCategories, setAllClues, setLoading } from "../redux/gameSlice";
+import { setAllClues, setLoading } from "../redux/gameSlice";
 
-export const getClues = (dispatch, ids) => {
+export const getClues = async (dispatch, ids) => {
   let allClues = [];
 
   let index = 0;
@@ -48,4 +48,5 @@ export const getClues = (dispatch, ids) => {
   };
 
   getNextClues();
+  dispatch(setLoading(false));
 };

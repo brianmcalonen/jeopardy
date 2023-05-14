@@ -1,5 +1,6 @@
 import axios from "axios";
-import { setCategories, setAllClues, setLoading } from "../redux/gameSlice";
+import { setCategories, setLoading } from "../redux/gameSlice";
+import { getClues } from "./getClues";
 
 export const fetchCategories = () => async (dispatch) => {
   dispatch(setLoading(true));
@@ -27,60 +28,58 @@ export const fetchCategories = () => async (dispatch) => {
     idsArray = idsArray.slice(0, 6);
 
     dispatch(setCategories(idsArray));
-    dispatch(setLoading(false));
 
     getClues(dispatch, idsArray);
   } catch (error) {
     // console.log(error.message);
-    dispatch(setLoading(false));
   }
 };
 
-const getClues = (dispatch, ids) => {
-  let allClues = [];
+// const getClues = (dispatch, ids) => {
+//   let allClues = [];
 
-  let index = 0;
+//   let index = 0;
 
-  const getNextClues = () => {
-    if (index >= ids.length) {
-      dispatch(setAllClues(allClues));
-      return;
-    }
+//   const getNextClues = () => {
+//     if (index >= ids.length) {
+//       dispatch(setAllClues(allClues));
+//       return;
+//     }
 
-    axios
-      .get(`https://jservice.io/api/clues/?category=${ids[index]}`)
-      .then((response) => {
-        // sort based on clue value
-        let newArr = response.data.map((obj) => ({
-          ...obj,
-          value: obj.value !== null ? obj.value : 1000,
-        }));
+//     axios
+//       .get(`https://jservice.io/api/clues/?category=${ids[index]}`)
+//       .then((response) => {
+//         // sort based on clue value
+//         let newArr = response.data.map((obj) => ({
+//           ...obj,
+//           value: obj.value !== null ? obj.value : 1000,
+//         }));
 
-        newArr.sort((a, b) => a.value - b.value);
+//         newArr.sort((a, b) => a.value - b.value);
 
-        newArr = newArr.slice(0, 5);
+//         newArr = newArr.slice(0, 5);
 
-        console.log("\n");
-        console.log(newArr[0].category.title);
+//         console.log("\n");
+//         console.log(newArr[0].category.title);
 
-        newArr.forEach((clue) => {
-          console.log(`$${clue.value}`);
-          console.log("Question:", clue.question);
-          console.log("Answer: ", clue.answer);
-        });
+//         newArr.forEach((clue) => {
+//           console.log(`$${clue.value}`);
+//           console.log("Question:", clue.question);
+//           console.log("Answer: ", clue.answer);
+//         });
 
-        console.log("\n");
+//         console.log("\n");
 
-        allClues.push(newArr);
+//         allClues.push(newArr);
 
-        index++;
+//         index++;
 
-        getNextClues();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+//         getNextClues();
+//       })
+//       .catch((error) => {
+//         console.log(error.message);
+//       });
+//   };
 
-  getNextClues();
-};
+//   getNextClues();
+// };
