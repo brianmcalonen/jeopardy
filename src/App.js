@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "./utils/fetchCategories";
+import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -9,6 +10,14 @@ function App() {
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
+
+  // Helper function to convert a string to title case
+  const toTitleCase = (str) => {
+    return str.replace(
+      /\w\S*/g,
+      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    );
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -20,7 +29,9 @@ function App() {
       <div className="game-board">
         {allClues.map((category) => (
           <div className="category-column">
-            <h2>{category[0].category.title}</h2>
+            <h2 className="clue-rectangle category-title">
+              {toTitleCase(category[0].category.title)}
+            </h2>
             {category.map((clue) => (
               <div className="clue-rectangle">
                 <p className="clue-value">${clue.value}</p>
