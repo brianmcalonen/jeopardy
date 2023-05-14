@@ -25,16 +25,16 @@ export const getClues = async (dispatch, ids) => {
 
         newArr = newArr.slice(0, 5);
 
-        console.log("\n");
-        console.log(newArr[0].category.title);
+        // console.log("\n");
+        // console.log(newArr[0].category.title);
 
-        newArr.forEach((clue) => {
-          console.log(`$${clue.value}`);
-          console.log("Question:", clue.question);
-          console.log("Answer: ", clue.answer);
-        });
+        // newArr.forEach((clue) => {
+        //   console.log(`$${clue.value}`);
+        //   console.log("Question:", clue.question);
+        //   console.log("Answer: ", clue.answer);
+        // });
 
-        console.log("\n");
+        // console.log("\n");
 
         allClues.push(newArr);
 

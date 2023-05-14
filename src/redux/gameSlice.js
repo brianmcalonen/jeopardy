@@ -6,6 +6,7 @@ const gameSlice = createSlice({
     categories: [],
     allClues: [],
     loading: true,
+    selectedClue: null,
   },
   reducers: {
     setCategories: (state, action) => {
@@ -17,9 +18,13 @@ const gameSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    setSelectedClue: (state, action) => {
+      state.selectedClue = action.payload;
+    },
   },
 });
 
-export const { setCategories, setAllClues, setLoading } = gameSlice.actions;
+export const { setCategories, setAllClues, setLoading, setSelectedClue } =
+  gameSlice.actions;
 
 export default gameSlice.reducer;

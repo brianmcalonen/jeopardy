@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "./utils/fetchCategories";
+import { setSelectedClue } from "./redux/gameSlice";
+import ClueModal from "./components/ClueModal";
 import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
-  const { allClues, loading } = useSelector((state) => state.game);
+  const { allClues, loading, selectedClue } = useSelector(
+    (state) => state.game
+  );
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -33,13 +37,22 @@ function App() {
               {toTitleCase(category[0].category.title)}
             </h2>
             {category.map((clue) => (
-              <div className="clue-rectangle">
+              <div
+                className="clue-rectangle"
+                key={clue.id}
+                onClick={() => dispatch(setSelectedClue(clue))}
+              >
                 <p className="clue-value">${clue.value}</p>
               </div>
             ))}
           </div>
         ))}
       </div>
+      <ClueModal
+        show={selectedClue !== null}
+        onHide={() => dispatch(setSelectedClue(null))}
+        clue={selectedClue}
+      />
     </div>
   );
 }
