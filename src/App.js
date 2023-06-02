@@ -30,7 +30,6 @@ function App() {
 
   return (
     <div>
-      <h1>Jeopardy Game</h1>
       <div className="game-board">
         {allClues.map((category) => (
           <div className="category-column">
@@ -39,9 +38,11 @@ function App() {
             </h2>
             {category.map((clue) => (
               <div
-                className="clue-rectangle"
+                className={`clue-rectangle ${clue.disabled ? "disabled" : ""}`}
                 key={clue.id}
-                onClick={() => dispatch(setSelectedClue(clue))}
+                onClick={() =>
+                  !clue.disabled && dispatch(setSelectedClue(clue))
+                }
               >
                 <p className="clue-value">${clue.value}</p>
               </div>

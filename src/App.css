@@ -53,3 +53,8 @@
   justify-content: space-around;
   margin-top: 20px;
 }
+
+.clue-rectangle.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

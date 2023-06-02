@@ -13,13 +13,25 @@ const gameSlice = createSlice({
       state.categories = action.payload;
     },
     setAllClues: (state, action) => {
-      state.allClues = action.payload;
+      // Set the 'disabled' property to false for all clues
+      state.allClues = action.payload.map((category) =>
+        category.map((clue) => ({ ...clue, disabled: false }))
+      );
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
     setSelectedClue: (state, action) => {
-      state.selectedClue = action.payload;
+      const clue = action.payload;
+      if (clue !== null) {
+        // Mark the selected clue as disabled in the allClues array
+        state.allClues = state.allClues.map((category) =>
+          category.map((c) => (c.id === clue.id ? { ...c, disabled: true } : c))
+        );
+      }
+
+      // Set the selected clue
+      state.selectedClue = clue;
     },
   },
 });
