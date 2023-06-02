@@ -14,7 +14,7 @@ const ClueModal = ({ show, onHide, clue }) => {
 
   if (selectedClue === null) return;
 
-  console.log("Answer: ", answer);
+  console.log("Answer: ", selectedClue.answer);
 
   return (
     <Modal show={show} onHide={onHide}>

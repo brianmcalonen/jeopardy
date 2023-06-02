@@ -48,8 +48,14 @@ function App() {
             ))}
           </div>
         ))}
+        <div className="category-column">
+          <PlayerCard />
+          <PlayerCard />
+          <PlayerCard />
+          <PlayerCard />
+        </div>
       </div>
-      <PlayerCard />
+
       <ClueModal
         show={selectedClue !== null}
         onHide={() => dispatch(setSelectedClue(null))}

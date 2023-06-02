@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import "../App.css";
 
-const PlayerCard = () => {
+const Card = () => {
   const [name, setName] = useState("");
   const [score, setScore] = useState(0);
 
@@ -21,21 +22,25 @@ const PlayerCard = () => {
   };
 
   return (
-    <div className="card">
-      <input
-        type="text"
-        value={name}
-        onChange={handleNameChange}
-        placeholder="Name"
-      />
+    <div className="player-card">
+      <div className="name-container">
+        <input
+          type="text"
+          value={name}
+          onChange={handleNameChange}
+          placeholder="Name"
+        />
+      </div>
 
       <div className="score-container">
-        <button onClick={decrementScore}>-</button>
         <input type="number" value={score} onChange={handleScoreChange} />
-        <button onClick={incrementScore}>+</button>
+        <div className="score-buttons">
+          <button onClick={decrementScore}>- 100</button>
+          <button onClick={incrementScore}>+ 100</button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default PlayerCard;
+export default Card;
