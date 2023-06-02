@@ -48,7 +48,7 @@ function App() {
             ))}
           </div>
         ))}
-        <div className="category-column">
+        <div className="player-column">
           <PlayerCard />
           <PlayerCard />
           <PlayerCard />
