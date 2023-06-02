@@ -8,11 +8,13 @@ const ClueModal = ({ show, onHide, clue }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Submitted answer:", answer);
+    // console.log("Submitted answer:", answer);
     onHide();
   };
 
   if (selectedClue === null) return;
+
+  console.log("Answer: ", answer);
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -23,9 +25,9 @@ const ClueModal = ({ show, onHide, clue }) => {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <div>Question: {selectedClue.question}</div>
-            <label htmlFor="answer-input" className="form-label">
+            {/* <label htmlFor="answer-input" className="form-label">
               Answer: {selectedClue.answer}
-            </label>
+            </label> */}
             <input
               type="text"
               className="form-control"

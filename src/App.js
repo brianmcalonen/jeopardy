@@ -4,6 +4,7 @@ import { fetchCategories } from "./utils/fetchCategories";
 import { setSelectedClue } from "./redux/gameSlice";
 import ClueModal from "./components/ClueModal";
 import "./App.css";
+import PlayerCard from "./components/PlayerCard";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function App() {
           </div>
         ))}
       </div>
+      <PlayerCard />
       <ClueModal
         show={selectedClue !== null}
         onHide={() => dispatch(setSelectedClue(null))}
