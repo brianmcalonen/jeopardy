@@ -30,7 +30,18 @@ function App() {
 
   return (
     <div>
-      <div className="game-board">
+      <div
+        style={{
+          textAlign: "center",
+        }}
+      >
+        <img src="/Jeopardy.png" alt="Jeopardy logo" width={"300px"} />
+      </div>
+
+      <div
+        className="game-board"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
         {allClues.map((category) => (
           <div className="category-column">
             <h2 className="clue-rectangle category-title">
@@ -49,12 +60,11 @@ function App() {
             ))}
           </div>
         ))}
-        <div className="player-column">
+        {/* <div className="player-column">
           <PlayerCard />
           <PlayerCard />
           <PlayerCard />
-          <PlayerCard />
-        </div>
+        </div> */}
       </div>
 
       <ClueModal
