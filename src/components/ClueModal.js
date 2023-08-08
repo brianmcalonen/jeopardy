@@ -4,12 +4,13 @@ import { Modal, Button } from "react-bootstrap";
 
 const ClueModal = ({ show, onHide, clue }) => {
   const [answer, setAnswer] = useState("");
+  const [showAnswer, setShowAnswer] = useState(false);
   const { selectedClue } = useSelector((state) => state.game);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log("Submitted answer:", answer);
-    onHide();
+    // onHide();
+    setShowAnswer(true);
   };
 
   if (selectedClue === null) return;
@@ -25,9 +26,11 @@ const ClueModal = ({ show, onHide, clue }) => {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <div>Question: {selectedClue.question}</div>
-            {/* <label htmlFor="answer-input" className="form-label">
-              Answer: {selectedClue.answer}
-            </label> */}
+            {showAnswer && (
+              <label htmlFor="answer-input" className="form-label">
+                Answer: {selectedClue.answer}
+              </label>
+            )}
             <input
               type="text"
               className="form-control"

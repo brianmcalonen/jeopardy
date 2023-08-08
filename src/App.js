@@ -16,14 +16,6 @@ function App() {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  // Helper function to convert a string to title case
-  const toTitleCase = (str) => {
-    return str.replace(
-      /\w\S*/g,
-      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-    );
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -75,5 +67,12 @@ function App() {
     </div>
   );
 }
+
+const toTitleCase = (str) => {
+  return str.replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  );
+};
 
 export default App;
