@@ -7,10 +7,21 @@ const ClueModal = ({ show, onHide, clue }) => {
   const [showAnswer, setShowAnswer] = useState(false);
   const { selectedClue } = useSelector((state) => state.game);
 
-  const handleSubmit = (event) => {
+  const handleCheckAnswer = (event) => {
     event.preventDefault();
-    // onHide();
     setShowAnswer(true);
+  };
+
+  const handleIncorrect = () => {
+    setShowAnswer(false);
+    onHide();
+    console.log("incorrect");
+  };
+
+  const handleCorrect = () => {
+    setShowAnswer(false);
+    onHide();
+    console.log("correct");
   };
 
   if (selectedClue === null) return;
@@ -23,14 +34,10 @@ const ClueModal = ({ show, onHide, clue }) => {
         <Modal.Title>{selectedClue.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleCheckAnswer}>
           <div className="mb-3">
-            <div>Question: {selectedClue.question}</div>
-            {showAnswer && (
-              <label htmlFor="answer-input" className="form-label">
-                Answer: {selectedClue.answer}
-              </label>
-            )}
+            <div>Q: {selectedClue.question}</div>
+            <br />
             <input
               type="text"
               className="form-control"
@@ -38,13 +45,43 @@ const ClueModal = ({ show, onHide, clue }) => {
               value={answer}
               onChange={(event) => setAnswer(event.target.value)}
             />
+            <br />
+            {showAnswer && (
+              <label htmlFor="answer-input" className="form-label">
+                A: {toTitleCase(selectedClue.answer)}
+              </label>
+            )}
           </div>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+          {!showAnswer && (
+            <Button variant="primary" type="submit">
+              Check Answer
+            </Button>
+          )}
+          {showAnswer && (
+            <div>
+              <Button
+                variant="danger"
+                type="submit"
+                style={{ marginRight: "20px" }}
+                onClick={handleIncorrect}
+              >
+                Incorrect
+              </Button>
+              <Button variant="success" type="submit" onClick={handleCorrect}>
+                Correct
+              </Button>
+            </div>
+          )}
         </form>
       </Modal.Body>
     </Modal>
+  );
+};
+
+const toTitleCase = (str) => {
+  return str.replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
   );
 };
 

@@ -4,7 +4,6 @@ import { fetchCategories } from "./utils/fetchCategories";
 import { setSelectedClue } from "./redux/gameSlice";
 import ClueModal from "./components/ClueModal";
 import "./App.css";
-import PlayerCard from "./components/PlayerCard";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,8 +33,8 @@ function App() {
         className="game-board"
         style={{ display: "flex", justifyContent: "center" }}
       >
-        {allClues.map((category) => (
-          <div className="category-column">
+        {allClues.map((category, index) => (
+          <div className="category-column" key={index}>
             <h2 className="clue-rectangle category-title">
               {toTitleCase(category[0].category.title)}
             </h2>
@@ -52,11 +51,6 @@ function App() {
             ))}
           </div>
         ))}
-        {/* <div className="player-column">
-          <PlayerCard />
-          <PlayerCard />
-          <PlayerCard />
-        </div> */}
       </div>
 
       <ClueModal
