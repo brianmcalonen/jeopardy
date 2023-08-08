@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "./utils/fetchCategories";
 import { setSelectedClue } from "./redux/gameSlice";
 import ClueModal from "./components/ClueModal";
+import ScoreBoard from "./components/ScoreBoard";
 import "./App.css";
 
 function App() {
@@ -27,30 +28,41 @@ function App() {
         }}
       >
         <img src="/Jeopardy.png" alt="Jeopardy logo" width={"300px"} />
+        <br />
+        <ScoreBoard />
+        <br />
       </div>
 
       <div
-        className="game-board"
-        style={{ display: "flex", justifyContent: "center" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          // justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        {allClues.map((category, index) => (
-          <div className="category-column" key={index}>
-            <h2 className="clue-rectangle category-title">
-              {toTitleCase(category[0].category.title)}
-            </h2>
-            {category.map((clue) => (
-              <div
-                className={`clue-rectangle ${clue.disabled ? "disabled" : ""}`}
-                key={clue.id}
-                onClick={() =>
-                  !clue.disabled && dispatch(setSelectedClue(clue))
-                }
-              >
-                <p className="clue-value">${clue.value}</p>
-              </div>
-            ))}
-          </div>
-        ))}
+        <div className="game-board">
+          {allClues.map((category, index) => (
+            <div className="category-column" key={index}>
+              <h2 className="clue-rectangle category-title">
+                {toTitleCase(category[0].category.title)}
+              </h2>
+              {category.map((clue) => (
+                <div
+                  className={`clue-rectangle ${
+                    clue.disabled ? "disabled" : ""
+                  }`}
+                  key={clue.id}
+                  onClick={() =>
+                    !clue.disabled && dispatch(setSelectedClue(clue))
+                  }
+                >
+                  <p className="clue-value">${clue.value}</p>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
       <ClueModal

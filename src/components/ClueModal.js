@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
+import { setTotalScore } from "../redux/gameSlice";
 
 const ClueModal = ({ show, onHide, clue }) => {
+  const dispatch = useDispatch();
+
   const [answer, setAnswer] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
   const { selectedClue } = useSelector((state) => state.game);
@@ -15,13 +18,15 @@ const ClueModal = ({ show, onHide, clue }) => {
   const handleIncorrect = () => {
     setShowAnswer(false);
     onHide();
-    console.log("incorrect");
+    console.log("incorrect", clue);
+    dispatch(setTotalScore(clue.value * -1));
   };
 
   const handleCorrect = () => {
     setShowAnswer(false);
     onHide();
     console.log("correct");
+    dispatch(setTotalScore(clue.value));
   };
 
   if (selectedClue === null) return;
