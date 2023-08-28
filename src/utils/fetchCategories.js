@@ -7,79 +7,19 @@ export const fetchCategories = () => async (dispatch) => {
 
   try {
     const response = await axios.get(
-      "https://jservice.io/api/random/?count=10"
+      "https://jservice.io/api/categories/?count=6"
     );
 
-    let idsArray = [];
+    if (!response.data || response.data.length === 0) return;
 
-    if (response.data.length === undefined) return;
-
-    for (let i = 0; i < response.data.length; i++) {
-      const id = response.data[i].category_id;
-      idsArray.push(id);
-    }
-
-    for (let i = 0; i < response.data.length; i++) {
-      if (!idsArray.includes(idsArray[i])) {
-        idsArray.push(idsArray[i]);
-      }
-    }
-
-    idsArray = idsArray.slice(0, 6);
+    const idsArray = response.data.map((category) => category.id);
 
     dispatch(setCategories(idsArray));
 
+    console.log("idsArray", idsArray);
+
     getClues(dispatch, idsArray);
   } catch (error) {
-    // console.log(error.message);
+    console.log(error.message);
   }
 };
-
-// const getClues = (dispatch, ids) => {
-//   let allClues = [];
-
-//   let index = 0;
-
-//   const getNextClues = () => {
-//     if (index >= ids.length) {
-//       dispatch(setAllClues(allClues));
-//       return;
-//     }
-
-//     axios
-//       .get(`https://jservice.io/api/clues/?category=${ids[index]}`)
-//       .then((response) => {
-//         // sort based on clue value
-//         let newArr = response.data.map((obj) => ({
-//           ...obj,
-//           value: obj.value !== null ? obj.value : 1000,
-//         }));
-
-//         newArr.sort((a, b) => a.value - b.value);
-
-//         newArr = newArr.slice(0, 5);
-
-//         console.log("\n");
-//         console.log(newArr[0].category.title);
-
-//         newArr.forEach((clue) => {
-//           console.log(`$${clue.value}`);
-//           console.log("Question:", clue.question);
-//           console.log("Answer: ", clue.answer);
-//         });
-
-//         console.log("\n");
-
-//         allClues.push(newArr);
-
-//         index++;
-
-//         getNextClues();
-//       })
-//       .catch((error) => {
-//         console.log(error.message);
-//       });
-//   };
-
-//   getNextClues();
-// };
