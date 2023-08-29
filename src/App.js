@@ -16,6 +16,10 @@ function App() {
     dispatch(fetchCategories());
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   fetchCategories();
+  // }, []);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -27,7 +31,7 @@ function App() {
           textAlign: "center",
         }}
       >
-        <img src="/Jeopardy.png" alt="Jeopardy logo" width={"300px"} />
+        <img src="Jeopardy.png" alt="Jeopardy logo" width={"300px"} />
         <br />
         <ScoreBoard />
         <br />
@@ -37,7 +41,6 @@ function App() {
         style={{
           display: "flex",
           flexDirection: "column",
-          // justifyContent: "center",
           alignItems: "center",
         }}
       >
