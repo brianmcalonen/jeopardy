@@ -2,6 +2,8 @@ import axios from "axios";
 import { setCategories, setLoading } from "../redux/gameSlice";
 import { getClues } from "./getClues";
 
+let hasRunGetClues = false;
+
 export const fetchCategories = () => async (dispatch) => {
   dispatch(setLoading(true));
 
@@ -21,6 +23,10 @@ export const fetchCategories = () => async (dispatch) => {
     console.log(`idsArray`, idsArray);
 
     // getClues(dispatch, idsArray);
+    if (!hasRunGetClues) {
+      getClues(dispatch, idsArray);
+      hasRunGetClues = true;
+    }
   } catch (error) {
     console.log(error.message);
     // Maybe update your state to reflect the error

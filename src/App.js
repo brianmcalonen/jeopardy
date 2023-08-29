@@ -45,26 +45,31 @@ function App() {
         }}
       >
         <div className="game-board">
-          {allClues.map((category, index) => (
-            <div className="category-column" key={index}>
-              <h2 className="clue-rectangle category-title">
-                {toTitleCase(category[0].category.title)}
-              </h2>
-              {category.map((clue) => (
-                <div
-                  className={`clue-rectangle ${
-                    clue.disabled ? "disabled" : ""
-                  }`}
-                  key={clue.id}
-                  onClick={() =>
-                    !clue.disabled && dispatch(setSelectedClue(clue))
-                  }
-                >
-                  <p className="clue-value">${clue.value}</p>
-                </div>
-              ))}
-            </div>
-          ))}
+          {allClues &&
+            allClues.length > 0 &&
+            allClues.map((category, index) => (
+              <div className="category-column" key={index}>
+                <h2 className="clue-rectangle category-title">
+                  {category && category[0] && category[0].category
+                    ? toTitleCase(category[0].category.title)
+                    : "N/A"}
+                </h2>
+
+                {category.map((clue) => (
+                  <div
+                    className={`clue-rectangle ${
+                      clue.disabled ? "disabled" : ""
+                    }`}
+                    key={clue.id}
+                    onClick={() =>
+                      !clue.disabled && dispatch(setSelectedClue(clue))
+                    }
+                  >
+                    <p className="clue-value">${clue.value}</p>
+                  </div>
+                ))}
+              </div>
+            ))}
         </div>
       </div>
 
